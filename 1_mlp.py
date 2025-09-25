@@ -165,7 +165,7 @@ if __name__ == "__main__":
     WEIGHT_DECAY = 0.0
     OPTIMIZER = "adam"  # choose "adam" or "sgd"
     RUN_TEST = True  # Whether to run test evaluation after training
-    TEST_ONLY = True  # If True, skip training and run test only (requires existing checkpoint)
+    TEST_ONLY = False  # If True, skip training and run test only (requires existing checkpoint)
     PATIENCE = 5
 
     CKPT_PATH = Path("checkpoints/mlp_model.pth")
@@ -196,7 +196,7 @@ if __name__ == "__main__":
             raise RuntimeError(
                 "Unable to infer input dimension from dataloader/dataset. Ensure dataset returns tensors.")
 
-    # Robustly infer number of classes and class names
+    # Robustly infer number of classes
     train_dataset = datasets_dict['train']
     if hasattr(train_dataset, 'classes'):
         my_class_names = list(getattr(train_dataset, 'classes'))

@@ -165,7 +165,7 @@ if __name__ == "__main__":
     WEIGHT_DECAY = 5e-4
     OPTIMIZER = "sgd"  # choose "adam" or "sgd"
     RUN_TEST = True  # Whether to run test evaluation after training
-    TEST_ONLY = True  # If True, skip training and run test only (requires existing checkpoint)
+    TEST_ONLY = False  # If True, skip training and run test only (requires existing checkpoint)
     PATIENCE = 5
 
     CKPT_PATH = Path("checkpoints/logistic_model.pth")
