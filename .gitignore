@@ -2,6 +2,5 @@
 /.idea/
 /__pycache__/
 /checkpoints/
-/plots/
 /.quarto/
 /_site/
