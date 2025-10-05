@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Workflow – Machine Learning A2</title>
+<title>presentation – Machine Learning A2</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -159,27 +159,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Workflow</h1>
+
+
+
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="https://colab.research.google.com/github/emilianodesu/MLA2/blob/main/presentation.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" class="img-fluid figure-img" alt="Open In Colab"></a></p>
+<figcaption>Open In Colab</figcaption>
+</figure>
 </div>
-
-
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
 <div id="e3b9ea06" class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -187,7 +177,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>git clone https:<span class="op">//</span>github.com<span class="op">/</span>emilianodesu<span class="op">/</span>MLA2.git</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Install required packages using the requirements.txt file inside the cloned directory</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>pip install <span class="op">-</span>r MLA2<span class="op">/</span>requirements.txt</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>pip install torch torchinfo torchvision</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Change the current working directory to the cloned repository folder</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
@@ -229,8 +219,17 @@ Using device: cpu</code></pre>
 </section>
 <section id="getting-images-ready" class="level2">
 <h2 class="anchored" data-anchor-id="getting-images-ready">## 2. Getting Images Ready</h2>
-<p>The dataset used in this project is the Chinese MNIST dataset, which contains images of handwritten Chinese numerals (digits 0-9) written by multiple individuals. Each image is labeled with its corresponding digit and additional label. The dataset is organized as follows: - <strong>Images</strong>: Located in the <code>data/c_mnist</code> folder, each image file is named according to its suite, sample, and code. - <strong>Labels</strong>: Provided in the <code>data/chinese_mnist.csv</code> file, which includes the digit value, character, and code for each image.</p>
-<p>In this section, the following steps are performed: 1. <strong>Download and Extraction</strong>: The dataset is downloaded (if not already present) and extracted to the <code>data</code> directory. 2. <strong>Splitting</strong>: The images are split into training, validation, and test sets according to a specified ratio, with each split organized into subfolders by class. 3. <strong>Summary and Preview</strong>: The script prints a summary of the number of images and classes in each split, and displays a random sample of images from the dataset for visual inspection.</p>
+<p>The dataset used in this project is the Chinese MNIST dataset, which contains images of handwritten Chinese numerals (digits 0-9) written by multiple individuals. Each image is labeled with its corresponding digit and additional label. The dataset is organized as follows:</p>
+<ul>
+<li><p><strong>Images</strong>: Located in the <code>data/c_mnist</code> folder, each image file is named according to its suite, sample, and code.</p></li>
+<li><p><strong>Labels</strong>: Provided in the <code>data/chinese_mnist.csv</code> file, which includes the digit value, character, and code for each image.</p></li>
+</ul>
+<p>In this section, the following steps are performed:</p>
+<ol type="1">
+<li><p><strong>Download and Extraction</strong>: The dataset is downloaded (if not already present) and extracted to the <code>data</code> directory.</p></li>
+<li><p><strong>Splitting</strong>: The images are split into training, validation, and test sets according to a specified ratio, with each split organized into subfolders by class.</p></li>
+<li><p><strong>Summary and Preview</strong>: The script prints a summary of the number of images and classes in each split, and displays a random sample of images from the dataset for visual inspection.</p></li>
+</ol>
 <p>The default ratio is training 80%, validation 10% and testing 10%.</p>
 <div id="65ea1d110d32f984" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2025-09-29T11:04:05.213719Z&quot;,&quot;start_time&quot;:&quot;2025-09-29T11:04:05.207842Z&quot;}" data-execution_count="3">
 <details class="code-fold">
@@ -276,10 +275,27 @@ test: 1500 images, 15 classes
 <h2 class="anchored" data-anchor-id="preprocessing-data">3. Preprocessing data</h2>
 <hr>
 <p>This section prepares image tensors and DataLoaders used for training and evaluation.</p>
-<p>What we do here: - Always convert images to grayscale (1 channel) first, then resize to a fixed image_size (e.g., 64x64). - Training-only augmentation (when augment=True): small random rotation (±10°) and RandomAffine with up to 5% translation. Validation and test receive no augmentation. - Convert images to tensors with transforms.ToTensor() so pixel values are in [0, 1]. - Optional normalization (when normalize=True): applies transforms.Normalize((mean,), (std,)) for the single grayscale channel. Defaults are mean=0, std=1. Use the same mean/std for train/val/test when enabled. - Optional flattening (when flatten=True): flattens the tensor to a 1-D vector via a Lambda step. Keep flatten=True for MLPs; set flatten=False for CNNs. - The overall transform order is: Grayscale → Resize → [Augment (train only)] → ToTensor → [Normalize] → [Flatten].</p>
-<p>How datasets and loaders are built: - Create ImageFolder datasets from data/train, data/val, and data/test; class labels come from the subfolder names created in the previous step. - Wrap datasets with PyTorch DataLoaders using the chosen batch_size. The training loader is shuffled; val/test are not.</p>
+<p>What we do here:</p>
+<ul>
+<li>Always convert images to grayscale (1 channel) first, then resize to a fixed image_size (e.g., 64x64).</li>
+<li>Training-only augmentation (when augment=True): small random rotation (±10°) and RandomAffine with up to 5% translation. Validation and test receive no augmentation.</li>
+<li>Convert images to tensors with transforms.ToTensor() so pixel values are in [0, 1].</li>
+<li>Optional normalization (when normalize=True): applies transforms.Normalize((mean,), (std,)) for the single grayscale channel. Defaults are mean=0, std=1. Use the same mean/std for train/val/test when enabled.</li>
+<li>Optional flattening (when flatten=True): flattens the tensor to a 1-D vector via a Lambda step. Keep flatten=True for MLPs; set flatten=False for CNNs.</li>
+<li>The overall transform order is: Grayscale → Resize → [Augment (train only)] → ToTensor → [Normalize] → [Flatten].</li>
+</ul>
+<p>How datasets and loaders are built:</p>
+<ul>
+<li>Create ImageFolder datasets from data/train, data/val, and data/test; class labels come from the subfolder names created in the previous step.</li>
+<li>Wrap datasets with PyTorch DataLoaders using the chosen batch_size. The training loader is shuffled; val/test are not.</li>
+</ul>
 <p>Inputs / outputs: - Inputs: images on disk under <code>data/{train,val,test}</code>. - Outputs: <code>dataloaders</code> and <code>datasets</code> dicts where <code>dataloaders['train']</code> yields (X, y) batches ready for training.</p>
-<p>Notes: - Normalization is off by default. Enable normalize=True to get zero-mean/unit-variance inputs based on the provided mean/std (single-channel). - Augmentation is intentionally light to preserve digit structure; adjust or disable as needed. - If splits are missing, call prepare_images(overwrite=False) to (re)create them.</p>
+<p>Notes:</p>
+<ul>
+<li>Normalization is off by default. Enable normalize=True to get zero-mean/unit-variance inputs based on the provided mean/std (single-channel).</li>
+<li>Augmentation is intentionally light to preserve digit structure; adjust or disable as needed.</li>
+<li>If splits are missing, call prepare_images(overwrite=False) to (re)create them.</li>
+</ul>
 <div id="7379b77beb7b1f13" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2025-09-29T08:16:41.562739Z&quot;,&quot;start_time&quot;:&quot;2025-09-29T08:16:41.505985Z&quot;}" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
@@ -527,22 +543,43 @@ DataLoaders for batch size 256 ready.</code></pre>
 </div>
 </div>
 <p>To enable offline analysis (without re‑running experiments), all <strong>per‑epoch metrics</strong> from every run are persisted immediately after training finishes.</p>
-<p>The following artifacts are written: - <strong>Per‑run JSON</strong> (directory: <code>metrics/mlp/</code>)<br>
+<p>The following artifacts are written:</p>
+<ul>
+<li><strong>Per‑run JSON</strong> (directory: <code>metrics/mlp/</code>)<br>
 File name pattern: <code>{run_id}.json</code> where <code>run_id = {model_type}_bs{batch}_{optimizer}_lr{lr}</code> (dots in the LR replaced by underscores).<br>
-Contents include: model/architecture label, optimizer, batch size, learning rate, plus full epoch lists for: <code>train_accuracy</code>, <code>train_loss</code>, <code>val_accuracy</code>, <code>val_loss</code>. - <strong>Global detailed CSV</strong>: <code>metrics/mlp/runs_detailed.csv</code><br>
+Contents include: model/architecture label, optimizer, batch size, learning rate, plus full epoch lists for: <code>train_accuracy</code>, <code>train_loss</code>, <code>val_accuracy</code>, <code>val_loss</code>.</li>
+<li><strong>Global detailed CSV</strong>: <code>metrics/mlp/runs_detailed.csv</code><br>
 A tidy, row‑wise log with one row per epoch across all runs. Columns:<br>
-<code>run_id, epoch, optimizer, batch_size, learning_rate, train_acc, train_loss, val_acc, val_loss</code>.</p>
+<code>run_id, epoch, optimizer, batch_size, learning_rate, train_acc, train_loss, val_acc, val_loss</code>.</li>
+</ul>
 <p>During training we maintain dictionaries keyed by <code>(batch_size, learning_rate)</code> to hold the epoch sequences for each optimizer. This avoids recomputation and lets us generate plots after all runs finish.</p>
-<p>For each optimizer (SGD, Adam) we store: - <code>total_acc_train_*</code>: List of training accuracy values per epoch. - <code>total_loss_train_*</code>: List of training loss values per epoch. - <code>total_acc_validation_*</code>: List of validation accuracy values per epoch. - <code>total_loss_validation_*</code>: List of validation loss values per epoch.</p>
+<p>For each optimizer (SGD, Adam) we store:</p>
+<ul>
+<li><code>total_acc_train_*</code>: List of training accuracy values per epoch.</li>
+<li><code>total_loss_train_*</code>: List of training loss values per epoch.</li>
+<li><code>total_acc_validation_*</code>: List of validation accuracy values per epoch.</li>
+<li><code>total_loss_validation_*</code>: List of validation loss values per epoch.</li>
+</ul>
 <p>(“*” is either <code>_sgd</code> or <code>_adam</code>).</p>
 <p>Each list length equals the number of completed epochs for that run (may be &lt; <code>EPOCHS</code> if early stopping triggered). These structures feed the plotting utilities and are also passed to the persistence function right after a run concludes.</p>
-<p><strong>Data Integrity Notes:</strong> - Persist is atomic per run: JSON then CSV append. If interrupted mid‑experiment, completed runs remain intact.<br>
-- Re‑running the same configuration will overwrite the JSON for that <code>run_id</code> but append additional rows to the CSV (you can later filter duplicates by keeping only the max epoch per <code>run_id</code>).<br>
-- Learning rates are string‑formatted in file names (with <code>.</code> swapped to <code>_</code>) to ensure filesystem safety.</p>
-<p><strong>Quick Recap</strong> 1. Train model with a (batch size, optimizer, learning rate) triple.<br>
-2. Collect epoch curves in memory.<br>
-3. Save JSON snapshot + append epoch rows to the global CSV.<br>
-4. Use saved data later for plotting, model selection, reporting.</p>
+<p><strong>Data Integrity Notes:</strong></p>
+<ul>
+<li>Persist is atomic per run: JSON then CSV append. If interrupted mid‑experiment, completed runs remain intact.<br>
+</li>
+<li>Re‑running the same configuration will overwrite the JSON for that <code>run_id</code> but append additional rows to the CSV (you can later filter duplicates by keeping only the max epoch per <code>run_id</code>).<br>
+</li>
+<li>Learning rates are string‑formatted in file names (with <code>.</code> swapped to <code>_</code>) to ensure filesystem safety.</li>
+</ul>
+<p><strong>Quick Recap</strong></p>
+<ol type="1">
+<li>Train model with a (batch size, optimizer, learning rate) triple.<br>
+</li>
+<li>Collect epoch curves in memory.<br>
+</li>
+<li>Save JSON snapshot + append epoch rows to the global CSV.<br>
+</li>
+<li>Use saved data later for plotting, model selection, reporting.</li>
+</ol>
 <div id="18dc7930" class="cell" data-execution_count="13">
 <details class="code-fold">
 <summary>Code</summary>
@@ -2769,13 +2806,18 @@ Training process plot saved to plots/mlp/mlp_3x512-256-128_256_0.0005_adam.png</
 <h2 class="anchored" data-anchor-id="testing">9. Testing</h2>
 <hr>
 <p>During evaluation we scan <code>checkpoints/mlp/</code>, parse filenames using regex to recover:<br>
-<code>depth</code>, <code>hidden_units</code>, <code>batch</code>, <code>optimizer</code>, <code>learning_rate</code>.<br>
-We then:<br>
-1. Reconstruct the exact MLP architecture.<br>
-2. Evaluate on the test set.<br>
-3. Track the best model by test accuracy (ties can be extended to break on F1).<br>
-4. Plot confusion matrix + training curves for the corresponding run.<br>
-5. Use the same parsed metadata to standardize plot filenames:</p>
+<code>depth</code>, <code>hidden_units</code>, <code>batch</code>, <code>optimizer</code>, <code>learning_rate</code>. We then:</p>
+<ol type="1">
+<li>Reconstruct the exact MLP architecture.<br>
+</li>
+<li>Evaluate on the test set.<br>
+</li>
+<li>Track the best model by test accuracy (ties can be extended to break on F1).<br>
+</li>
+<li>Plot confusion matrix + training curves for the corresponding run.<br>
+</li>
+<li>Use the same parsed metadata to standardize plot filenames:</li>
+</ol>
 <pre><code>plots/mlp/best_model_training_process_{model_name}_{batch}_{lr}_{optimizer}.png</code></pre>
 <div id="4fd7c1b6" class="cell" data-execution_count="16">
 <details class="code-fold">
