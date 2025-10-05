@@ -1,0 +1,17 @@
+project:
+  type: website
+  output-dir: _site
+
+website:
+  title: "Machine Learning A2"
+  navbar:
+    left:
+      - text: "Journal"
+        file: journal.ipynb
+      - text: "Implementation"
+        file: presentation.ipynb
+format:
+  html:
+    theme: cosmo
+    toc: true
+    code-fold: true

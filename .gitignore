@@ -4,3 +4,5 @@
 /checkpoints/
 /metrics/
 /plots/
+/.quarto/
+/_site/
