@@ -1,2 +1,156 @@
-# MLA2
-Machine Learning Assignment 2
+# Overview
+
+This project investigates supervised classification on the *Chinese MNIST* dataset using two baseline model families:
+
+1.  **Logistic Regression** (single linear layer) – a capacity baseline.
+2.  **Multi-Layer Perceptron (MLP)** with configurable depth, width patterns, dropout, and optimizer sweeps.
+
+The goal is to quantify how architectural depth/width, batch size, optimizer choice (SGD+Momentum vs Adam), and learning rate impact convergence behavior and generalization on a mid‑sized grayscale digit dataset with 15 target classes.
+
+Key design principles:
+
+-   Reproducible training loops with early stopping (monitoring validation accuracy).
+-   Systematic hyperparameter sweeps with per‑run metric persistence (JSON + aggregated CSV).
+-   Strict, explicit checkpoint naming to enable automated parsing during model selection.
+-   Lightweight, interpretable baselines before exploring convolutional or more modern architectures.
+
+------------------------------------------------------------------------
+
+# Dataset
+
+**Chinese MNIST** consists of grayscale images (handwritten Chinese numeral variants). The project pipeline:
+
+| Step | Action |
+|-------------------------------|-----------------------------------------|
+| 1 | Download & extract `data.zip` (if missing) |
+| 2 | Generate stratified splits: train / val / test (80 / 10 / 10) |
+| 3 | Optional label variant control (`value`, `value_character`, or `code`) |
+| 4 | Apply light train-time augmentation: small rotation + affine translation |
+| 5 | Transform → Grayscale → Resize (64×64) → ToTensor → Normalize → Flatten |
+
+(\*Normalization and flattening are configurable. Flattening is enabled for linear / MLP baselines.)
+
+Augmentation is intentionally conservative to avoid distorting digit structure. All transforms are defined in `preprocessing_utils.py`.
+
+------------------------------------------------------------------------
+
+# Models
+
+## Logistic Regression
+
+Single `Linear(input_dim, num_classes)` layer. Serves as a minimal baseline to detect whether the dataset is linearly separable in raw pixel space (after flattening).
+
+## MLP Baseline
+
+Hidden layer blocks: `Linear → BatchNorm1d → ReLU → Dropout` repeated per hidden layer. Output layer is linear (raw logits). Depth and width patterns explored include:
+
+-   `mlp_1x512`
+-   `mlp_2x256`
+-   `mlp_3x512-256-128`
+-   (Easily extensible to 4+ layer tapered variants.)
+
+Regularization: Dropout (0.5) + Weight Decay (5e-4). Adam and SGD+Momentum (0.9) compared across coarse→fine learning rates.
+
+------------------------------------------------------------------------
+
+# Experiments
+
+| Dimension      | Values                      |
+|----------------|-----------------------------|
+| Batch Size     | 32, 256                     |
+| Optimizers     | Adam, SGD (momentum=0.9)    |
+| Learning Rates | 0.01, 0.001, 0.0005         |
+| Epoch Ceiling  | 30 (logreg), 50 (MLP)       |
+| Early Stopping | Patience = 5 (val accuracy) |
+| Architectures  | See model list above        |
+
+Each `(architecture, batch_size, optimizer, lr)` combination produces a best‑validation checkpoint. File naming pattern examples:
+
+```         
+checkpoints/log_reg/model_{batch}_{optimizer}_{lr}.pth
+checkpoints/mlp/mlp_3x512-256-128_{batch}_{optimizer}_{lr}.pth
+```
+
+Hyperparameter metrics for every epoch are persisted:
+
+-   Per‑run JSON: `metrics/mlp/*.json`
+-   Aggregated CSV: `metrics/mlp/runs_detailed.csv`
+
+This enables offline analytics (ranking, plotting without re‑training) and reproducible result summaries.
+
+------------------------------------------------------------------------
+
+# Evaluation & Selection
+
+During the test phase:
+
+1.  Checkpoints are enumerated and **parsed via regex** to recover architecture + hyperparameters.
+2.  Each model is reconstructed and evaluated on the test loader matching its batch size.
+3.  Best model selected by **test accuracy** (ties can be extended to include macro‑F1).
+4.  Confusion matrix + performance curves for the best run are rendered to `plots/`.
+5.  A lightweight *qualitative* inference stage samples one test image per class for visual confirmation and class confidence inspection.
+
+Metric focus: Accuracy (primary), Macro‑F1 (class balance), qualitative inspection (misclass patterns).
+
+------------------------------------------------------------------------
+
+# Quick Start
+
+## 1. Environment
+
+Install Python 3.10+ and required packages (PyTorch, torchvision, torchinfo, seaborn, scikit‑learn, pandas, numpy, matplotlib). If a `requirements.txt` is added later, prefer that.
+
+## 2. Run Logistic Regression Baseline
+
+``` bash
+python log_reg.py
+```
+
+## 3. Run MLP Experiments
+
+Open `presentation.ipynb` and execute sequentially, or adapt the training loops for CLI execution.
+
+## 4. Inspect Outputs
+
+-   Checkpoints: `checkpoints/`\
+-   Metrics JSON/CSV: `metrics/`\
+-   Plots (curves & confusion matrices): `plots/`
+
+## 5. Inference (Best Model)
+
+Run the later notebook cells (section “Inference”) or re‑load a checkpoint and call the `predict_image` utility.
+
+------------------------------------------------------------------------
+
+# Repository Layout
+
+```         
+├── log_reg.py                # Logistic regression experiment script
+├── mlp.py                    # Configurable MLP model definition
+├── models_utils.py           # Training / evaluation / plotting utilities
+├── preprocessing_utils.py    # Dataset prep, transforms, loaders, visualization
+├── presentation.ipynb        # Exploratory + training notebook (MLP focus)
+├── checkpoints/              # Saved model weights (per config)
+├── metrics/                  # JSON + CSV run metrics
+├── plots/                    # Loss/accuracy curves & confusion matrices
+├── data/                     # Prepared splits + raw CSV
+└── LICENSE                   # GPLv3 license
+```
+
+------------------------------------------------------------------------
+
+# Possible Extensions
+
+-   Convolutional baselines (CNN) with non‑flattened transforms.
+-   Calibration analysis (reliability diagrams, ECE).
+-   Automated hyperparameter search (Optuna / Ray Tune).
+-   Model ensembling across top runs.
+-   Export for mobile / ONNX runtime inference.
+
+------------------------------------------------------------------------
+
+# License
+
+This project is distributed under the terms of the **GNU General Public License v3.0 (GPL‑3.0)**. See the `LICENSE` file for full details.
+
+------------------------------------------------------------------------
