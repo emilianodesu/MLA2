@@ -10,6 +10,18 @@ website:
         file: journal.ipynb
       - text: "Implementation"
         file: presentation.ipynb
+      - text: "Models"
+        menu:
+          - text: "Logistic Regression"
+            file: notebooks/log_reg.ipynb
+          - text: "Multi-Layer Perceptron"
+            file: notebooks/mlp.ipynb
+      - text: "Utils"
+        menu:
+          - text: "Preprocessing"
+            file: notebooks/preprocessing_utils.ipynb
+          - text: "Training and Evaluation"
+            file: notebooks/models_utils.ipynb
 format:
   html:
     theme: cosmo
