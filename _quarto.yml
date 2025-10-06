@@ -7,7 +7,7 @@ website:
   navbar:
     left:
       - text: "Journal"
-        file: journal.ipynb
+        file: notebooks/journal.ipynb
       - text: "Implementation"
         file: presentation.ipynb
       - text: "Models"

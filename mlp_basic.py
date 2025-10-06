@@ -8,7 +8,7 @@ from preprocessing_utils import prepare_images, get_dataloaders
 from models_utils import train_model, test_model, plot_confusion_matrix, plot_training_process
 
 
-class MLPBaseline(nn.Module):
+class MLPBaselineBasic(nn.Module):
     """
     Baseline 1: Multi-Layer Perceptron (MLP).
     Architecture: input_dim -> 512 -> 128 -> num_classes
@@ -63,7 +63,7 @@ if __name__ == "__main__":
     DROPOUT_RATE = 0.5
 
     # Model definition
-    model = MLPBaseline(input_dim=INPUT_DIM, num_classes=NUM_CLASSES, dropout=DROPOUT_RATE).to(device)
+    model = MLPBaselineBasic(input_dim=INPUT_DIM, num_classes=NUM_CLASSES, dropout=DROPOUT_RATE).to(device)
     summary(model, (1, INPUT_DIM))  # shape for single sample
 
     # Optimizer and loss
@@ -95,7 +95,7 @@ if __name__ == "__main__":
 
     # Test
     print("\nEvaluating best model on test set...")
-    best_model = MLPBaseline(input_dim=INPUT_DIM, num_classes=NUM_CLASSES, dropout=DROPOUT_RATE).to(device)
+    best_model = MLPBaselineBasic(input_dim=INPUT_DIM, num_classes=NUM_CLASSES, dropout=DROPOUT_RATE).to(device)
     best_model.load_state_dict(torch.load("checkpoints/mlp_model_2.pth", map_location=device))
 
     acc, f1, cm = test_model(best_model, dataloaders["test"], criterion=criterion)
