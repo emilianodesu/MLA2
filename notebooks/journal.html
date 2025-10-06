@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>MLA2: Journal – Machine Learning A2</title>
+<title>Machine Learning A2: Project Journal – Machine Learning A2</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -67,6 +67,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -88,7 +117,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../journal.ipynb"> 
+    <a class="nav-link active" href="../notebooks/journal.html" aria-current="page"> 
 <span class="menu-text">Journal</span></a>
   </li>  
   <li class="nav-item">
@@ -141,21 +170,27 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#a.-task-definition" id="toc-a.-task-definition" class="nav-link active" data-scroll-target="#a.-task-definition">A. Task Definition</a></li>
+  <li><a href="#a.-task-definition" id="toc-a.-task-definition" class="nav-link active" data-scroll-target="#a.-task-definition">A. Task Definition</a>
+  <ul class="collapse">
+  <li><a href="#objective" id="toc-objective" class="nav-link" data-scroll-target="#objective"><strong>Objective</strong></a></li>
+  <li><a href="#interface" id="toc-interface" class="nav-link" data-scroll-target="#interface"><strong>Interface</strong></a></li>
+  </ul></li>
   <li><a href="#b.-explanation-of-model-algorithm-key-components-and-system-structure" id="toc-b.-explanation-of-model-algorithm-key-components-and-system-structure" class="nav-link" data-scroll-target="#b.-explanation-of-model-algorithm-key-components-and-system-structure">B. Explanation of Model, Algorithm, Key Components, and System Structure</a>
   <ul class="collapse">
   <li><a href="#system-overview" id="toc-system-overview" class="nav-link" data-scroll-target="#system-overview"><strong>System Overview</strong></a></li>
   <li><a href="#key-components" id="toc-key-components" class="nav-link" data-scroll-target="#key-components"><strong>Key components</strong></a></li>
-  <li><a href="#theory-to-code" id="toc-theory-to-code" class="nav-link" data-scroll-target="#theory-to-code"><strong>Theory-to-code</strong></a></li>
+  <li><a href="#theory-to-code-mapping" id="toc-theory-to-code-mapping" class="nav-link" data-scroll-target="#theory-to-code-mapping"><strong>Theory-to-code Mapping</strong></a></li>
   <li><a href="#implementation-details-and-challenges" id="toc-implementation-details-and-challenges" class="nav-link" data-scroll-target="#implementation-details-and-challenges"><strong>Implementation Details and Challenges</strong></a></li>
   </ul></li>
   <li><a href="#c.-model-evaluation-and-refinement" id="toc-c.-model-evaluation-and-refinement" class="nav-link" data-scroll-target="#c.-model-evaluation-and-refinement">C. Model Evaluation and Refinement</a>
   <ul class="collapse">
   <li><a href="#expected-model-behaviour" id="toc-expected-model-behaviour" class="nav-link" data-scroll-target="#expected-model-behaviour"><strong>Expected Model Behaviour</strong></a></li>
   <li><a href="#loss-function-vs.-task-objective" id="toc-loss-function-vs.-task-objective" class="nav-link" data-scroll-target="#loss-function-vs.-task-objective"><strong>Loss Function vs.&nbsp;Task Objective</strong></a></li>
+  <li><a href="#empirical-results" id="toc-empirical-results" class="nav-link" data-scroll-target="#empirical-results"><strong>Empirical Results</strong></a></li>
   <li><a href="#discrepancy-analysis" id="toc-discrepancy-analysis" class="nav-link" data-scroll-target="#discrepancy-analysis"><strong>Discrepancy Analysis</strong></a></li>
   <li><a href="#reflections-and-future-work" id="toc-reflections-and-future-work" class="nav-link" data-scroll-target="#reflections-and-future-work"><strong>Reflections and Future Work</strong></a></li>
   </ul></li>
+  <li><a href="#appendix-reproducibility-and-artifacts" id="toc-appendix-reproducibility-and-artifacts" class="nav-link" data-scroll-target="#appendix-reproducibility-and-artifacts">Appendix: Reproducibility and Artifacts</a></li>
   </ul>
 </nav>
     </div>
@@ -164,7 +199,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">MLA2: Journal</h1>
+<h1 class="title">Machine Learning A2: Project Journal</h1>
 </div>
 
 
@@ -182,42 +217,211 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p><strong>Author</strong>: Carlos Emiliano Mendoza Hernandez</p>
-<p><strong>Option 2: Build a machine learning system to address a practical challenge.</strong></p>
-<p>The focus in this type is on applying your understanding of machine learning systems to real-world problems. Alignment and practicality are key. You are expected to design a learning-based system that solves a task involving real-world data—such as predicting stock prices or recognising patterns in images or text. The problem should be formulated in a computable way, and the learning objective (loss function) should be both computationally effective and practically meaningful.</p>
+<p><strong>Task</strong>: Chinese MNIST classification with Logistic Regression and MLP baselines.</p>
+<p><strong>Repo/Docs</strong>:</p>
+<ul>
+<li>Overview: https://emilianodesu.github.io/MLA2/<br>
+</li>
+<li>Presentation: https://emilianodesu.github.io/MLA2/presentation.html<br>
+</li>
+<li>Notebooks:
+<ul>
+<li>Logistic Regression: https://emilianodesu.github.io/MLA2/notebooks/log_reg.html<br>
+</li>
+<li>MLP: https://emilianodesu.github.io/MLA2/notebooks/mlp.html<br>
+</li>
+<li>Preprocessing Utils: https://emilianodesu.github.io/MLA2/notebooks/preprocessing_utils.html<br>
+</li>
+<li>Models Utils: https://emilianodesu.github.io/MLA2/notebooks/models_utils.html<br>
+</li>
+</ul></li>
+<li>V0 baselines (first approach):
+<ul>
+<li>V0/log_reg.py: https://github.com/emilianodesu/MLA2/blob/main/V0/log_reg.py<br>
+</li>
+<li>V0/mlp.py: https://github.com/emilianodesu/MLA2/blob/main/V0/mlp.py<br>
+</li>
+<li>V0/models_utils.py: https://github.com/emilianodesu/MLA2/blob/main/V0/models_utils.py</li>
+</ul></li>
+</ul>
+<p>This journal synthesizes the implementation and results documented across the pages above.</p>
 <section id="a.-task-definition" class="level2">
 <h2 class="anchored" data-anchor-id="a.-task-definition">A. Task Definition</h2>
+<p>Handwritten digit recognition (e.g., MNIST) is a canonical benchmark for testing machine learning models on visual pattern classification. The Chinese MNIST dataset extends this challenge from 10 Arabic numerals (0–9) to 15 Chinese numerals and related characters, introducing significant visual and structural complexity. Chinese numerals often include multiple intersecting strokes, nested radicals, or shared components that create high intra-class variability (due to handwriting differences) and high inter-class similarity (characters that differ by subtle radicals or stroke orientation). These factors make the task substantially more challenging than Latin digit classification and more representative of real-world OCR tasks involving non-Latin scripts.</p>
+<p>The motivation for selecting handwritten Chinese character classification is both intellectual and practical. From a research perspective, it provides a more demanding testbed for classical and neural models, allowing for a richer analysis of model capacity, feature extraction, and decision boundaries. From an application standpoint, automated recognition of Chinese handwritten characters underpins important tasks such as digitizing historical archives, postal address recognition, educational handwriting feedback tools, and OCR systems for Chinese administrative and cultural documents. Building robust models for this task aligns with broader goals in multilingual OCR and low-resource script digitization.</p>
+<p>This project aims to build two baseline models for classifying images of handwritten Chinese numerals from the Chinese MNIST dataset. The models will be a logistic regression and a multi-layer perceptron (MLP). The goal is to establish foundational performance benchmarks that can be improved upon with more advanced architectures in future work.</p>
+<section id="objective" class="level3">
+<h3 class="anchored" data-anchor-id="objective"><strong>Objective</strong></h3>
+<p>The objective of this project is to implement and evaluate two baseline models—Logistic Regression and a configurable Multi-Layer Perceptron (MLP)—for classifying handwritten Chinese numerals into their corresponding categories. By systematically preprocessing the data, defining a clean model interface, and running controlled training and evaluation pipelines, the project establishes baseline performance and analyzes the strengths and limitations of linear vs.&nbsp;nonlinear decision functions in this context. This work sets the foundation for future extensions, such as convolutional architectures or transformers, which could further exploit the spatial structure of the images.</p>
+</section>
+<section id="interface" class="level3">
+<h3 class="anchored" data-anchor-id="interface"><strong>Interface</strong></h3>
+<p><strong>Inputs</strong></p>
+<p>The system operates on <strong>grayscale images</strong> of handwritten Chinese characters drawn from the Chinese MNIST dataset. After preparation, each sample is stored as <code>data/{train,val,test}/{class}/image.png</code>. Metadata containing the numeric value, Unicode character, and file code is loaded from <code>data/chinese_mnist.csv</code>. The preprocessing pipeline (implemented in <code>preprocessing_utils.py</code>) applies a <strong>deterministic sequence of transformations</strong>:</p>
+<ol type="1">
+<li><strong>Image to tensor</strong>: Convert to single-channel grayscale, resize to 64×64, convert to PyTorch tensor with values in ([0, 1]).</li>
+<li><strong>Optional normalization</strong>: Subtract per-channel mean and divide by standard deviation.</li>
+<li><strong>Data augmentation</strong> <em>(train only)</em>: Random rotations (±10°) and affine translations (≤5%) simulate handwriting variations.</li>
+<li><strong>Flattening</strong>: The final image tensor is reshaped in row-major order into a fixed-length <strong>4096-dimensional vector</strong>, ensuring compatibility with linear and MLP models.</li>
+</ol>
+<p>Batches are loaded via <code>get_dataloaders(...)</code>, which returns PyTorch DataLoaders for train, validation, and test splits. The <strong>input tensor</strong> to the models has shape <code>(batch_size, 4096)</code> and contains real values in [0, 1] (normalized if enabled), with no NaNs. <strong>Target labels</strong> are integer-encoded in ({0, , 14}), corresponding to the 15 character classes:</p>
+<pre><code>['0', '1', '10', '100', '1000', '10000', '100000000',
+ '2', '3', '4', '5', '6', '7', '8', '9']</code></pre>
+<p><strong>Outputs</strong></p>
+<p>Given an input batch <span class="math inline">\(X \in \mathbb{R}^{B \times 4096}\)</span>, the model returns <strong>logits</strong> <span class="math inline">\(Z \in \mathbb{R}^{B \times 15}\)</span>. These logits are transformed using a <strong>softmax</strong> function to produce class probabilities <span class="math inline">\(p(y|x)\)</span> for each sample, with <span class="math inline">\(\sum_i p_i = 1\)</span>. Two prediction modes are provided:</p>
+<ul>
+<li><code>predict</code>: <span class="math inline">\(\arg\max_i Z_i\)</span> returns the most likely class index.</li>
+<li><code>predict_proba</code>: returns the full probability vector for downstream analysis or thresholding.</li>
+</ul>
+<p>All <strong>training and evaluation metrics</strong> (e.g., loss, accuracy) are logged per epoch to structured JSON and CSV files under <code>metrics/</code>, while <strong>model checkpoints</strong> are stored under <code>checkpoints/</code> using standardized filenames encoding architecture, optimizer, batch size, and learning rate. Final test metrics and confusion matrices are saved in <code>plots/</code> for inspection (see <a href="https://emilianodesu.github.io/MLA2/presentation.html">presentation Sections 7–10</a>).</p>
+<p><strong>Rationale Linking Inputs, Outputs, and Task</strong></p>
+<p>The <strong>flattened 4096-dimensional vector</strong> serves as a stable, fixed-length numerical representation of each image, enabling both linear and MLP models to operate without convolutional layers. Light <strong>data augmentation</strong> introduces invariance to the types of perturbations expected in real handwriting, improving generalization. The <strong>cross-entropy loss</strong> on the softmax logits directly optimizes the negative log-likelihood of the correct class, aligning exactly with the task objective of assigning each image to one of 15 categories. The logits also provide a probabilistic interpretation useful for confidence estimation, misclassification analysis, and visualization. This tight alignment between <strong>input representation</strong>, <strong>model output</strong>, and <strong>loss function</strong> ensures that the computational pipeline reflects the structure and demands of the classification task rather than relying on ad hoc heuristics.</p>
+</section>
 </section>
 <section id="b.-explanation-of-model-algorithm-key-components-and-system-structure" class="level2">
 <h2 class="anchored" data-anchor-id="b.-explanation-of-model-algorithm-key-components-and-system-structure">B. Explanation of Model, Algorithm, Key Components, and System Structure</h2>
 <section id="system-overview" class="level3">
 <h3 class="anchored" data-anchor-id="system-overview"><strong>System Overview</strong></h3>
+<p>The project follows a structured end-to-end pipeline that mirrors standard machine learning workflows, from data acquisition to final model evaluation. Each component was designed to be modular, reproducible, and analytically transparent.</p>
+<p><strong>1. Data Preparation</strong></p>
+<p>(<em><code>preprocessing_utils.py</code></em>, presentation Sec. 2–3) The raw dataset is first downloaded and extracted if necessary, after which it is partitioned into stratified training, validation, and test splits with an 80 / 10 / 10 ratio. This stratification ensures that class proportions are preserved across splits, maintaining balanced evaluation. ImageFolder datasets are then constructed, and corresponding DataLoaders are instantiated with configured transforms and batch sizes. These transforms handle basic preprocessing (e.g., tensor conversion and normalization) and light augmentations to improve generalization without distorting the underlying character structures.</p>
+<p><strong>2. Model Definition</strong></p>
+<p>(<em><code>mlp.py</code>, <code>log_reg.py</code></em>, presentation Sec. 4–6) Two primary model families were explored:</p>
+<ul>
+<li><p><strong>Logistic Regression</strong>: A single linear layer mapping the 4096-dimensional flattened input to 15 logits. This provides a simple baseline to assess the linear separability of the data.</p></li>
+<li><p><strong>MLP Baselines</strong>: Deeper fully connected architectures built from repeating blocks of <code>Linear → BatchNorm1d → ReLU → Dropout</code>, followed by a final linear layer to 15 logits. Three key architectures were examined:</p>
+<ul>
+<li><code>mlp_1x512</code></li>
+<li><code>mlp_2x256</code></li>
+<li><code>mlp_3x512-256-128</code> (the main configuration showcased in the presentation).</li>
+</ul></li>
+</ul>
+<p>All models employ dropout (0.5) and weight decay (5 × 10⁻⁴) for regularization. Batch normalization and ReLU activations stabilize training and enable effective optimization across learning rates.</p>
+<p><strong>3. Training Loop</strong></p>
+<p>(<em><code>models_utils.py</code></em>, presentation Sec. 7) The training pipeline supports both SGD with momentum (0.9) and Adam optimizers, with learning rates in {0.01, 0.001, 0.0005}. Models are trained for up to 50 epochs for MLPs and 30 for Logistic Regression, with early stopping based on validation accuracy (patience = 5). Each epoch performs forward propagation, computes cross-entropy loss, runs backpropagation, updates parameters, and evaluates on the validation set. Checkpoints are saved whenever validation accuracy improves, and training metrics are logged to JSON and CSV for reproducibility.</p>
+<p>We adopt mini‑batch gradient descent. Contrast of optimizers: - <strong>SGD+Momentum</strong> approximates a first-order low-pass filter over gradients; momentum term reduces variance &amp; accelerates along shallow curvature. - <strong>Adam</strong> adapts per-parameter step size using first &amp; second moment estimates (bias-corrected). Faster initial descent but may converge to sharper minima; weight decay mitigates overfitting.</p>
+<p><strong>4. Model Selection and Testing</strong></p>
+<p>(<em>Evaluation &amp; Selection site, presentation Sec. 9–10</em>) All checkpoints within <code>/checkpoints/log_reg/</code> and related directories are automatically enumerated. Filenames encode hyperparameter settings (architecture, batch size, optimizer, learning rate), which are parsed via regular expressions to reconstruct model configurations. Each model is reloaded and evaluated on the test set using the original batch size. The best model is selected by test accuracy. Additional analyses include confusion matrix visualization and qualitative inspection on selected test samples.</p>
 </section>
 <section id="key-components" class="level3">
 <h3 class="anchored" data-anchor-id="key-components"><strong>Key components</strong></h3>
+<p><strong>Data–Model Alignment.</strong></p>
+<p>Images are grayscale 64×64, flattened into 4096-dimensional vectors. This representation deliberately avoids convolutional inductive biases, isolating the effects of network depth/width, optimization strategy, and regularization on a pure dense architecture. Light augmentations preserve the geometric integrity of Chinese characters, avoiding transformations that could corrupt stroke patterns.</p>
+<p><strong>Model Architecture.</strong></p>
+<p>MLPs with BatchNorm and ReLU form a robust hypothesis class: they accelerate convergence, stabilize gradient flow, and benefit from dropout to mitigate co-adaptation. The tapered architecture (512 → 256 → 128) encourages progressive feature compression, reducing parameter count in later layers while retaining representational power.</p>
+<p><strong>Optimization Strategies.</strong></p>
+<p>Adam provides adaptive learning rates and generally converges rapidly with minimal tuning. SGD with momentum introduces a useful inductive bias toward flatter minima and often yields competitive generalization. Both are systematically compared across learning rates to identify stable regimes.</p>
+<p><strong>Early Stopping and Persistence.</strong></p>
+<p>Validation accuracy monitoring prevents overfitting and reduces unnecessary computation. A strict, human- and machine-readable checkpoint naming convention allows efficient post-hoc analyses: JSON and CSV logs enable quick aggregation and plotting without retraining.</p>
 </section>
-<section id="theory-to-code" class="level3">
-<h3 class="anchored" data-anchor-id="theory-to-code"><strong>Theory-to-code</strong></h3>
+<section id="theory-to-code-mapping" class="level3">
+<h3 class="anchored" data-anchor-id="theory-to-code-mapping"><strong>Theory-to-code Mapping</strong></h3>
+<p>For input <span class="math inline">\(x \in \mathbb{R}^{4096}\)</span>, the network computes <span class="math display">\[
+z = f_\theta(x),
+\]</span> where <span class="math inline">\(f_\theta\)</span> is the composition of affine, batch normalization, ReLU, and dropout layers. The final linear layer produces 15 logits; softmax probabilities are used implicitly through <code>CrossEntropyLoss</code>: <span class="math display">\[
+p_i = \frac{\exp(z_i)}{\sum_j \exp(z_j)}.
+\]</span> Gradients of the negative log-likelihood are backpropagated via PyTorch’s autograd engine. Parameter updates follow either:</p>
+<ul>
+<li><p><strong>SGD with Momentum</strong>: <span class="math inline">\(v_t = \mu v_{t-1} + \nabla_\theta L_t\)</span>, <span class="math inline">\(\theta_{t+1} = \theta_t - \eta v_t - \eta \lambda \theta_t\)</span>.</p></li>
+<li><p><strong>Adam</strong>: Maintains first and second moment estimates <span class="math inline">\(m, v\)</span>, with bias correction to update each parameter adaptively.</p></li>
+</ul>
+<p>Early stopping monitors validation accuracy, saving the best checkpoint and halting when no improvement is observed within the patience window.</p>
 </section>
 <section id="implementation-details-and-challenges" class="level3">
 <h3 class="anchored" data-anchor-id="implementation-details-and-challenges"><strong>Implementation Details and Challenges</strong></h3>
+<p><strong>Batch Size.</strong></p>
+<p>Smaller batches (e.g., 32) introduced gradient noise that occasionally improved generalization, whereas larger batches (256) yielded smoother loss curves but sometimes required lower learning rates to remain stable.</p>
+<p><strong>Learning Rate Sensitivity.</strong></p>
+<p>Empirically, Adam with 0.001 and SGD with 0.01 were consistently strong choices. A learning rate of 0.0005 was often useful for fine-tuning later in training.</p>
+<p><strong>Metric Persistence.</strong></p>
+<p>Each training run produces atomic JSON and CSV logs, making it straightforward to rank, visualize, and compare results. Duplicate runs are identifiable by <code>run_id</code> hashes, enabling robust experiment tracking.</p>
+<p><strong>Evolution from V0.</strong></p>
+<p>The initial V0 scripts (in <code>V0/log_reg.py</code>, <code>V0/mlp.py</code>, and <code>V0/models_utils.py</code>) provided a minimal, working pipeline: a single training loop without sophisticated checkpointing, metric persistence, or architectural exploration. The final version refactors and extends this baseline by:</p>
+<ul>
+<li>Incorporating BatchNorm and Dropout to improve stability and generalization.</li>
+<li>Implementing early stopping for more efficient training.</li>
+<li>Establishing a consistent checkpoint/logging framework for systematic experimentation.</li>
+<li>Automating checkpoint enumeration and test-time model selection for evaluation.</li>
+</ul>
 </section>
 </section>
 <section id="c.-model-evaluation-and-refinement" class="level2">
 <h2 class="anchored" data-anchor-id="c.-model-evaluation-and-refinement">C. Model Evaluation and Refinement</h2>
 <section id="expected-model-behaviour" class="level3">
 <h3 class="anchored" data-anchor-id="expected-model-behaviour"><strong>Expected Model Behaviour</strong></h3>
+<p>The primary objective of the project is to maximize classification accuracy on the held-out test set of the Chinese MNIST dataset. Secondary objectives include monitoring macro-F1 scores to assess per-class balance and inspecting confusion matrices for systematic misclassifications, particularly among visually similar numerals and characters. The dataset is split stratified 80/10/10 into training, validation, and test sets. Early stopping is applied based on validation accuracy to prevent overfitting, and the final model is selected based on test-set performance among saved checkpoints.</p>
 </section>
 <section id="loss-function-vs.-task-objective" class="level3">
 <h3 class="anchored" data-anchor-id="loss-function-vs.-task-objective"><strong>Loss Function vs.&nbsp;Task Objective</strong></h3>
+<p>During training, the model optimizes Cross-Entropy Loss, which serves as a differentiable surrogate for 0–1 accuracy. While accuracy is the ultimate evaluation metric, cross-entropy offers several advantages: it provides smooth gradients suitable for backpropagation, allows probabilistic calibration through softmax outputs, and generally correlates strongly with classification accuracy. The minor mismatch between the training objective (loss minimization) and evaluation goal (accuracy maximization) is acceptable because it enables stable optimization and effective model convergence.</p>
+</section>
+<section id="empirical-results" class="level3">
+<h3 class="anchored" data-anchor-id="empirical-results"><strong>Empirical Results</strong></h3>
+<p>The dataset consists of 12,000 training images (800 per class) and 1,500 images each for validation and testing (100 per class), ensuring balanced class distributions. Representative experiments with the primary MLP architecture (<code>mlp_3x512-256-128</code>, batch size 32) reveal nuanced optimization dynamics:</p>
+<ul>
+<li><p>Adam, lr=0.01: Early stopping occurred quickly at val_acc ≈ 0.593, indicating that this learning rate is too aggressive for the given architecture.</p></li>
+<li><p>Adam, lr=0.001: Val_acc peaked at ≈ 0.887 around epoch 23 before early stopping, demonstrating stable convergence.</p></li>
+<li><p>SGD with momentum 0.9, lr=0.01: Val_acc steadily increased to ≈ 0.899 by epoch 29, indicating strong generalization performance.</p></li>
+<li><p>SGD, lr=0.001: Converged more slowly but eventually achieved mid/high 0.88 val_acc, requiring more epochs to reach peak performance.</p></li>
+</ul>
+<p>Patterns across experiments show that the best validation accuracies were obtained with ADAM at lr=0.001 for the 3-layer tapered MLP. Larger batch runs (bs=256) were logged and analyzed similarly; test-time evaluation used the same systematic checkpoint parsing and selection procedure. As documented on the site “Evaluation &amp; Selection,” checkpoints are parsed and re-evaluated on the test split; best-by-test-accuracy is selected. Confusion matrices and sample inference visualizations are produced for the winner.</p>
 </section>
 <section id="discrepancy-analysis" class="level3">
 <h3 class="anchored" data-anchor-id="discrepancy-analysis"><strong>Discrepancy Analysis</strong></h3>
+<p>Cross-entropy may favor confidence calibration over sheer accuracy in some regimes. Where classes are visually similar (e.g., characters with similar strokes), macro-F1 helps detect minority-class degradations even in a balanced dataset. Confusion matrices highlight consistent misclass pairs: future work can target these with specialized augmentation or architectural priors (e.g., CNN).</p>
 </section>
 <section id="reflections-and-future-work" class="level3">
 <h3 class="anchored" data-anchor-id="reflections-and-future-work"><strong>Reflections and Future Work</strong></h3>
-
-
+<hr>
 </section>
+</section>
+<section id="appendix-reproducibility-and-artifacts" class="level2">
+<h2 class="anchored" data-anchor-id="appendix-reproducibility-and-artifacts">Appendix: Reproducibility and Artifacts</h2>
+<p><strong>What worked</strong>:</p>
+<ul>
+<li>Early stopping + BatchNorm + Dropout significantly improved MLP training stability and generalization vs.&nbsp;the V0 approach.</li>
+<li>Systematic logging (JSON/CSV) and strict checkpoint naming made it easy to compare runs and prevented “lost best model” issues.</li>
+<li>Adam at 0.001 provided strong, steady results.</li>
+</ul>
+<p><strong>What could be improved</strong>:</p>
+<ul>
+<li>Convolutional inductive bias: Dense MLPs over flattened pixels ignore locality; CNN baselines should improve both sample efficiency and final accuracy.</li>
+<li>Calibration analysis: Add reliability diagrams/ECE to assess confidence; helpful if deploying probabilistic outputs.</li>
+<li>Hyperparameter search: Move from manual grids to Optuna/Ray Tune for depth/width/LR/momentum/weight decay.</li>
+<li>Data normalization: Compute dataset mean/std to enable consistent Normalize(mean,std) and potentially improve optimization smoothness.</li>
+<li>Regularization sweeps: Dropout rates and weight decay could be tuned per depth.</li>
+<li>Ensembling: Averaging top-N checkpoints may yield a small but robust boost.</li>
+<li>Mixed precision / GPU acceleration: For larger sweeps, AMP and device utilization would help.</li>
+</ul>
+<p><strong>Next steps</strong>:</p>
+<ul>
+<li><p>Implement CNN baselines (e.g., small ConvNet or ResNet-18 with grayscale input) using non-flattened transforms.</p></li>
+<li><p>Automate experiment orchestration (config files and seeds), and report mean±std across multiple seeds. Include confidence intervals and statistical tests (e.g., paired t-test on per-sample correctness between top models).</p></li>
+<li><p>Extend selection criteria to incorporate macro-F1 in tie-breaks and include per-class recall thresholds.</p></li>
+<li><p>Scripts:</p>
+<ul>
+<li>log_reg.py: minimal linear baseline with 30-epoch ceiling.</li>
+<li>mlp.py: MLPBaseline class with configurable hidden_layers, hidden_units, dropout.</li>
+<li>models_utils.py: train_model, test_model, plotting utilities (training curves, confusion matrix), predict_image.</li>
+<li>preprocessing_utils.py: prepare_images, summarize_split, get_dataloaders, transforms, previews.</li>
+</ul></li>
+<li><p>Checkpoints and metrics:</p>
+<ul>
+<li>checkpoints/: per-run best validation models saved with pattern:
+<ul>
+<li>MLP: checkpoints/mlp/{arch}_{batch}_{optimizer}_{lr}.pth</li>
+<li>LR: checkpoints/log_reg/model_{batch}_{optimizer}_{lr}.pth</li>
+</ul></li>
+<li>metrics/mlp/: per-run JSON + runs_detailed.csv; enables offline plotting and ranking without re-training.</li>
+<li>plots/: confusion matrices and training curves.</li>
+</ul></li>
+<li><p>V0 lineage:</p>
+<ul>
+<li>Early versions (V0/*.py) established a working baseline but lacked BatchNorm, robust persistence, and standardized naming. The current code incorporates these improvements, enabling more reliable experimentation and clearer reporting.</li>
+</ul></li>
+</ul>
+
+
 </section>
 
 </main> <!-- /main -->
