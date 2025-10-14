@@ -126,10 +126,13 @@ Run the later notebook cells (section “Inference”) or re‑load a checkpoint
 
 ```         
 ├── log_reg.py                # Logistic regression experiment script
+├── mlp_basic.py              # MLP first approach (single config)
 ├── mlp.py                    # Configurable MLP model definition
 ├── models_utils.py           # Training / evaluation / plotting utilities
 ├── preprocessing_utils.py    # Dataset prep, transforms, loaders, visualization
-├── presentation.ipynb        # Exploratory + training notebook (MLP focus)
+├── implementation.ipynb      # Exploratory + training notebook (MLP focus)
+├── presentation.ipynb        # Final report + results discussion
+├── notebooks/                # Additional notebooks for display in the website
 ├── checkpoints/              # Saved model weights (per config)
 ├── metrics/                  # JSON + CSV run metrics
 ├── plots/                    # Loss/accuracy curves & confusion matrices

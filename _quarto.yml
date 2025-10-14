@@ -26,6 +26,6 @@ website:
             file: notebooks/models_utils.ipynb
 format:
   html:
-    theme: cosmo
+    theme: pulse
     toc: true
-    code-fold: true
+    code-fold: false
