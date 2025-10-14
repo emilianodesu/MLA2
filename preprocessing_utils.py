@@ -192,7 +192,7 @@ def preview_random_images(data_dir: str | Path = "data/c_mnist", n_images: int =
     sample_images = random.sample(all_images, min(n_images, len(all_images)))
 
     # Setup plot
-    _, axes = plt.subplots(*grid_size, figsize=(10, 10))
+    _, axes = plt.subplots(*grid_size, figsize=(grid_size[0] * 4, grid_size[1] * 4))
     axes = np.array(axes).ravel()
 
     for img_path, ax in zip(sample_images, axes):
@@ -207,7 +207,7 @@ def preview_random_images(data_dir: str | Path = "data/c_mnist", n_images: int =
 
         ax.imshow(img)
         ax.axis("off")
-        ax.set_title(f"Class ID: {code_id}\nShape: [{h}, {w}, {c}]", fontsize=9)
+        ax.set_title(f"Class ID: {code_id}\nShape: [{h}, {w}, {c}]", fontsize=grid_size[0] * 4)
 
     # Hide unused subplots if n_images < rows*cols
     for ax in axes[len(sample_images):]:

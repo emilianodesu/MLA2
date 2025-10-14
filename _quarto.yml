@@ -9,8 +9,10 @@ website:
       - text: "Journal"
         file: notebooks/journal.ipynb
       - text: "Implementation"
-        file: presentation.ipynb
+        file: implementation.ipynb
       - text: "Models"
+      - text: "Presentation"
+        file: presentation.ipynb
         menu:
           - text: "Logistic Regression"
             file: notebooks/log_reg.ipynb
