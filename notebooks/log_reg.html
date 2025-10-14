@@ -72,7 +72,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-ddd961a2510921635943dfbbd19534c4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-d13ac4e80c000af260af3917723b819e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -243,8 +243,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Early stopping triggers when validation accuracy fails to improve for <code>patience</code> epochs; best checkpoint is preserved.</li>
 </ul>
 <div id="0ecdd564" class="cell" data-execution_count="2">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
@@ -532,7 +530,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-285"><a href="#cb2-285" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"Predicted class: </span><span class="sc">{</span>prediction<span class="sc">}</span><span class="ss"> | Logits: </span><span class="sc">{</span>logits<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb2-286"><a href="#cb2-286" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
 <span id="cb2-287"><a href="#cb2-287" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"No best model available; skipping inference."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>2.8.0+cpu
 Using device: cpu

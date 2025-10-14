@@ -72,7 +72,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-ddd961a2510921635943dfbbd19534c4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-d13ac4e80c000af260af3917723b819e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -195,8 +195,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 <div id="e3b9ea06" class="cell">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Clone the entire repository</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>git clone https:<span class="op">//</span>github.com<span class="op">/</span>emilianodesu<span class="op">/</span>MLA2.git</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -206,14 +204,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Change the current working directory to the cloned repository folder</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>os.chdir(<span class="st">'MLA2'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 <section id="imports" class="level2">
 <h2 class="anchored" data-anchor-id="imports">1. Imports</h2>
 <hr>
 <div id="initial_id" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2025-09-29T11:03:16.243696Z&quot;,&quot;start_time&quot;:&quot;2025-09-29T11:03:11.071074Z&quot;}" data-execution_count="1">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
@@ -225,16 +220,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> preprocessing_utils <span class="im">import</span> prepare_images, summarize_split, preview_random_images, get_dataloaders, show_batch</span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> models_utils <span class="im">import</span> train_model, test_model, plot_confusion_matrix, plot_training_process, predict_image</span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mlp <span class="im">import</span> MLPBaseline</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 <div id="5beaa2c1" class="cell" data-execution_count="2">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(torch.__version__)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Device setup</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>device <span class="op">=</span> torch.device(<span class="st">"cuda"</span> <span class="cf">if</span> torch.cuda.is_available() <span class="cf">else</span> <span class="st">"cpu"</span>)</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Using device: </span><span class="sc">{</span>device<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>2.8.0+cpu
 Using device: cpu</code></pre>
@@ -256,11 +247,8 @@ Using device: cpu</code></pre>
 </ol>
 <p>The default ratio is training 80%, validation 10% and testing 10%.</p>
 <div id="65ea1d110d32f984" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2025-09-29T11:04:05.213719Z&quot;,&quot;start_time&quot;:&quot;2025-09-29T11:04:05.207842Z&quot;}" data-execution_count="3">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>root <span class="op">=</span> prepare_images()</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Dataset ready at: </span><span class="sc">{</span>root<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Dataset already exists, skipping download.
 Train/Val/Test folders already exist. (Set overwrite=True to recreate them)
@@ -268,10 +256,7 @@ Dataset ready at: data</code></pre>
 </div>
 </div>
 <div id="ca47986915191088" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2025-09-29T11:04:09.048004Z&quot;,&quot;start_time&quot;:&quot;2025-09-29T11:04:08.803914Z&quot;}" data-execution_count="4">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>summarize_split(<span class="bu">str</span>(root))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>train: 12000 images, 15 classes
 {'0': 800, '1': 800, '10': 800, '100': 800, '1000': 800, '10000': 800, '100000000': 800, '2': 800, '3': 800, '4': 800, '5': 800, '6': 800, '7': 800, '8': 800, '9': 800}
@@ -282,10 +267,7 @@ test: 1500 images, 15 classes
 </div>
 </div>
 <div id="5c7786acd7e9934" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2025-09-29T08:16:41.492578Z&quot;,&quot;start_time&quot;:&quot;2025-09-29T08:16:41.112240Z&quot;}">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>preview_random_images(data_dir<span class="op">=</span><span class="bu">str</span>(root <span class="op">/</span> <span class="st">"c_mnist"</span>), n_images<span class="op">=</span><span class="dv">9</span>, grid_size<span class="op">=</span>(<span class="dv">3</span>, <span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -321,23 +303,17 @@ test: 1500 images, 15 classes
 <li>If splits are missing, call prepare_images(overwrite=False) to (re)create them.</li>
 </ul>
 <div id="7379b77beb7b1f13" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2025-09-29T08:16:41.562739Z&quot;,&quot;start_time&quot;:&quot;2025-09-29T08:16:41.505985Z&quot;}" data-execution_count="6">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>dataloaders, datasets <span class="op">=</span> get_dataloaders(data_dir<span class="op">=</span><span class="st">"data"</span>, batch_size<span class="op">=</span><span class="dv">64</span>, image_size<span class="op">=</span>(<span class="dv">64</span>, <span class="dv">64</span>), augment<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> datasets[<span class="st">'train'</span>].classes</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"DataLoaders ready."</span>)</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Classes: </span><span class="sc">{</span>labels<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>DataLoaders ready.
 Classes: ['0', '1', '10', '100', '1000', '10000', '100000000', '2', '3', '4', '5', '6', '7', '8', '9']</code></pre>
 </div>
 </div>
 <div id="fb24f392" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2025-09-29T08:16:42.073210Z&quot;,&quot;start_time&quot;:&quot;2025-09-29T08:16:41.571073Z&quot;}" data-execution_count="7">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>show_batch(datasets[<span class="st">'train'</span>], n<span class="op">=</span><span class="dv">12</span>, cols<span class="op">=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -454,8 +430,6 @@ Applied after each hidden layer to reduce co-adaptation and mitigate overfitting
 </tbody>
 </table>
 <div id="a4d86d19" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2025-09-29T08:16:42.274448Z&quot;,&quot;start_time&quot;:&quot;2025-09-29T08:16:42.271677Z&quot;}" data-execution_count="8">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>sample_batch <span class="op">=</span> <span class="bu">next</span>(<span class="bu">iter</span>(dataloaders[<span class="st">"train"</span>]))[<span class="dv">0</span>]</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># For flattened 64x64 images</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>INPUT_DIM <span class="op">=</span> sample_batch.shape[<span class="dv">1</span>] <span class="cf">if</span> sample_batch.ndim <span class="op">==</span> <span class="dv">2</span> <span class="cf">else</span> sample_batch[<span class="dv">0</span>].numel()</span>
@@ -471,18 +445,14 @@ Applied after each hidden layer to reduce co-adaptation and mitigate overfitting
 <span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>MLP_HIDDEN_LAYERS <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>]</span>
 <span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>MLP_HIDDEN_UNITS <span class="op">=</span> [<span class="dv">1024</span>, <span class="dv">512</span>, <span class="dv">256</span>, <span class="dv">128</span>]</span>
 <span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>DROPOUT_RATE <span class="op">=</span> <span class="fl">0.5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 <p>We define ranges for batch size, learning rate, hidden layers, and hidden units to allow hyperparameter search to find the best combination. Other parameters are fixed based on common defaults and prior experience with similar tasks. These are the architectures we will explore:</p>
 <div id="fc981aee" class="cell" data-execution_count="9">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>architectures <span class="op">=</span> [</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"name"</span>: <span class="st">"mlp_1x512"</span>, <span class="st">"hidden_layers"</span>: MLP_HIDDEN_LAYERS[<span class="dv">0</span>], <span class="st">"hidden_units"</span>: MLP_HIDDEN_UNITS[<span class="dv">1</span>], <span class="st">"dropout"</span>: DROPOUT_RATE},</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"name"</span>: <span class="st">"mlp_2x256"</span>, <span class="st">"hidden_layers"</span>: MLP_HIDDEN_LAYERS[<span class="dv">1</span>], <span class="st">"hidden_units"</span>: MLP_HIDDEN_UNITS[<span class="dv">2</span>], <span class="st">"dropout"</span>: DROPOUT_RATE},</span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"name"</span>: <span class="st">"mlp_3x512-256-128"</span>, <span class="st">"hidden_layers"</span>: MLP_HIDDEN_LAYERS[<span class="dv">2</span>], <span class="st">"hidden_units"</span>: MLP_HIDDEN_UNITS[<span class="dv">1</span>:], <span class="st">"dropout"</span>: DROPOUT_RATE}</span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 </section>
 <section id="loss-and-optimizer" class="level2">
@@ -494,24 +464,18 @@ Applied after each hidden layer to reduce co-adaptation and mitigate overfitting
 <p><strong>Stochastic Gradient Descent (SGD)</strong> updates model parameters by moving them in the direction that reduces the loss, using gradients computed from random mini-batches of data. This introduces beneficial noise, helping the optimizer escape local minima and improving generalization. SGD is simple, memory-efficient, and, when combined with momentum, can accelerate convergence and smooth parameter updates. However, it requires careful tuning of the learning rate and may converge slowly, especially on problems with complex or poorly scaled loss surfaces.</p>
 <p><strong>Adam (Adaptive Moment Estimation)</strong> extends SGD by maintaining running averages of both the gradients and their squared values for each parameter, enabling adaptive learning rates. Adam typically converges faster and is less sensitive to the initial learning rate, making it robust and easy to use for a wide range of problems. It is especially effective for large datasets and high-dimensional parameter spaces.</p>
 <div id="1aa15785" class="cell" data-execution_count="10">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model definition</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>mlp_model <span class="op">=</span> MLPBaseline(input_dim<span class="op">=</span>INPUT_DIM, num_classes<span class="op">=</span>NUM_CLASSES, hidden_layers<span class="op">=</span>MLP_HIDDEN_LAYERS[<span class="dv">2</span>], hidden_units<span class="op">=</span>MLP_HIDDEN_UNITS[<span class="dv">1</span>:], dropout<span class="op">=</span>DROPOUT_RATE)</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Loss and optimizers</span></span>
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>criterion <span class="op">=</span> torch.nn.CrossEntropyLoss()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 </section>
 <section id="models-summary" class="level2">
 <h2 class="anchored" data-anchor-id="models-summary">## 6. Models Summary</h2>
 <div id="643da142" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2025-09-29T08:16:42.482485Z&quot;,&quot;start_time&quot;:&quot;2025-09-29T08:16:42.479634Z&quot;}" data-execution_count="11">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"MLP summary (input_dim=</span><span class="sc">{</span>INPUT_DIM<span class="sc">}</span><span class="ss">, num_classes=</span><span class="sc">{</span>NUM_CLASSES<span class="sc">}</span><span class="ss">)"</span>)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>summary(mlp_model, input_size<span class="op">=</span>(<span class="dv">1</span>, INPUT_DIM), col_names<span class="op">=</span>(<span class="st">"input_size"</span>, <span class="st">"output_size"</span>, <span class="st">"num_params"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>MLP summary (input_dim=4096, num_classes=15)</code></pre>
 </div>
@@ -553,14 +517,11 @@ Estimated Total Size (MB): 9.09
 <hr>
 <p>First, we are going to create different dataloaders for each batch size and training the model for each batch size.</p>
 <div id="83b9a2d7" class="cell" data-execution_count="12">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>dataloaders_dict <span class="op">=</span> {}</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> bs <span class="kw">in</span> BATCH_SIZE:</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    dl, _ <span class="op">=</span> get_dataloaders(data_dir<span class="op">=</span><span class="st">"data"</span>, batch_size<span class="op">=</span>bs, image_size<span class="op">=</span>(<span class="dv">64</span>, <span class="dv">64</span>), augment<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    dataloaders_dict[bs] <span class="op">=</span> dl</span>
 <span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"DataLoaders for batch size </span><span class="sc">{</span>bs<span class="sc">}</span><span class="ss"> ready."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>DataLoaders for batch size 32 ready.
 DataLoaders for batch size 256 ready.</code></pre>
@@ -605,8 +566,6 @@ A tidy, row‑wise log with one row per epoch across all runs. Columns:<br>
 <li>Use saved data later for plotting, model selection, reporting.</li>
 </ol>
 <div id="18dc7930" class="cell" data-execution_count="13">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure metrics directory exists</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>os.makedirs(<span class="st">"metrics/mlp"</span>, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -644,11 +603,8 @@ A tidy, row‑wise log with one row per epoch across all runs. Columns:<br>
 <span id="cb22-35"><a href="#cb22-35" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> epoch_idx, (ta, tl, va, vl) <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">zip</span>(acc_train, loss_train, acc_val, loss_val), start<span class="op">=</span><span class="dv">1</span>):</span>
 <span id="cb22-36"><a href="#cb22-36" aria-hidden="true" tabindex="-1"></a>            writer.writerow([run_id, epoch_idx, optimizer_name, batch_size, lr, ta, tl, va, vl])</span>
 <span id="cb22-37"><a href="#cb22-37" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Metrics persisted for </span><span class="sc">{</span>run_id<span class="sc">}</span><span class="ss"> -&gt; </span><span class="sc">{</span>json_path<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 <div id="ab314515" class="cell" data-execution_count="14">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>total_acc_train_sgd <span class="op">=</span> {}</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>total_acc_validation_sgd <span class="op">=</span> {}</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>total_loss_train_sgd <span class="op">=</span> {}</span>
@@ -715,7 +671,6 @@ A tidy, row‑wise log with one row per epoch across all runs. Columns:<br>
 <span id="cb23-64"><a href="#cb23-64" aria-hidden="true" tabindex="-1"></a>        persist_run_metrics(architectures[ARCHITECTURE_IDX][<span class="st">"name"</span>], <span class="st">"sgd"</span>, bs, lr, acc_train_sgd, loss_train_sgd, acc_val_sgd, loss_val_sgd)</span>
 <span id="cb23-65"><a href="#cb23-65" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-66"><a href="#cb23-66" aria-hidden="true" tabindex="-1"></a>        run_idx <span class="op">+=</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Training with batch size: 32
@@ -2678,8 +2633,6 @@ Metrics persisted for mlp_3x512-256-128_bs256_sgd_lr0_0005 -&gt; metrics\mlp\mlp
 <section id="saving-training-progress-plots" class="level2">
 <h2 class="anchored" data-anchor-id="saving-training-progress-plots">## 8. Saving Training Progress Plots</h2>
 <div id="9f91c857" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2025-09-29T08:16:42.586693Z&quot;,&quot;start_time&quot;:&quot;2025-09-29T08:16:42.584089Z&quot;}" data-execution_count="15">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>ARCHITECTURE_IDX <span class="op">=</span> <span class="dv">2</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> bs <span class="kw">in</span> BATCH_SIZE:</span>
@@ -2701,7 +2654,6 @@ Metrics persisted for mlp_3x512-256-128_bs256_sgd_lr0_0005 -&gt; metrics\mlp\mlp
 <span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>            total_loss_validation_adam[(bs, lr)],</span>
 <span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f"plots/mlp/</span><span class="sc">{</span>architectures[ARCHITECTURE_IDX][<span class="st">'name'</span>]<span class="sc">}</span><span class="ss">_</span><span class="sc">{</span>bs<span class="sc">}</span><span class="ss">_</span><span class="sc">{</span>lr<span class="sc">}</span><span class="ss">_adam.png"</span></span>
 <span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>        )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Plotting training process for batch size 32 and learning rate 0.01 (SGD)
@@ -2844,8 +2796,6 @@ Training process plot saved to plots/mlp/mlp_3x512-256-128_256_0.0005_adam.png</
 </ol>
 <pre><code>plots/mlp/best_model_training_process_{model_name}_{batch}_{lr}_{optimizer}.png</code></pre>
 <div id="4fd7c1b6" class="cell" data-execution_count="16">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>pattern_with_opt <span class="op">=</span> re.<span class="bu">compile</span>(<span class="vs">r"^mlp_(\d+)x([0-9\-]+)_(\d+)_(adam|sgd)_([0-9.]+)\.pth$"</span>)</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>pattern_no_opt <span class="op">=</span> re.<span class="bu">compile</span>(<span class="vs">r"^mlp_(\d+)x([0-9\-]+)_(\d+)_([0-9.]+)\.pth$"</span>)</span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -2883,11 +2833,8 @@ Training process plot saved to plots/mlp/mlp_3x512-256-128_256_0.0005_adam.png</
 <span id="cb28-35"><a href="#cb28-35" aria-hidden="true" tabindex="-1"></a>        <span class="st">"optimizer"</span>: optimizer,</span>
 <span id="cb28-36"><a href="#cb28-36" aria-hidden="true" tabindex="-1"></a>        <span class="st">"lr"</span>: lr,</span>
 <span id="cb28-37"><a href="#cb28-37" aria-hidden="true" tabindex="-1"></a>    }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 <div id="e885821e" class="cell" data-execution_count="17">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>MODELS_DIR <span class="op">=</span> <span class="st">"checkpoints/mlp"</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>best <span class="op">=</span> {</span>
@@ -2949,7 +2896,6 @@ Training process plot saved to plots/mlp/mlp_3x512-256-128_256_0.0005_adam.png</
 <span id="cb29-59"><a href="#cb29-59" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"  -&gt; New best model: </span><span class="sc">{</span>model_path<span class="sc">}</span><span class="ss"> (Acc: </span><span class="sc">{</span>test_acc<span class="sc">:.4f}</span><span class="ss">, F1: </span><span class="sc">{</span>f1<span class="sc">:.4f}</span><span class="ss">)"</span>)</span>
 <span id="cb29-60"><a href="#cb29-60" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
 <span id="cb29-61"><a href="#cb29-61" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Models directory not found: </span><span class="sc">{</span>MODELS_DIR<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Testing model: checkpoints/mlp\mlp_1x512_256_adam_0.0005.pth
@@ -3139,12 +3085,9 @@ Accuracy: 0.8940 | F1: 0.8937</code></pre>
 </div>
 <p>Plot training process and confusion matrix of the best model</p>
 <div id="3d31468b" class="cell" data-execution_count="18">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> best[<span class="st">"cm"</span>] <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Best model: </span><span class="sc">{</span>best[<span class="st">'path'</span>]<span class="sc">}</span><span class="ss"> | Acc: </span><span class="sc">{</span>best[<span class="st">'acc'</span>]<span class="sc">:.4f}</span><span class="ss"> | F1: </span><span class="sc">{</span>best[<span class="st">'f1'</span>]<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    plot_confusion_matrix(best[<span class="st">"cm"</span>], datasets[<span class="st">"train"</span>].classes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Best model: checkpoints/mlp\mlp_3x512-256-128_256_adam_0.001.pth | Acc: 0.9173 | F1: 0.9171</code></pre>
@@ -3158,8 +3101,6 @@ Best model: checkpoints/mlp\mlp_3x512-256-128_256_adam_0.001.pth | Acc: 0.9173 |
 </div>
 </div>
 <div id="7693062b" class="cell" data-execution_count="19">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> best[<span class="st">"path"</span>] <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    hidden_units <span class="op">=</span> best[<span class="st">'hidden_units'</span>]</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    depth <span class="op">=</span> best[<span class="st">'hidden_layers'</span>]</span>
@@ -3197,7 +3138,6 @@ Best model: checkpoints/mlp\mlp_3x512-256-128_256_adam_0.001.pth | Acc: 0.9173 |
 <span id="cb33-35"><a href="#cb33-35" aria-hidden="true" tabindex="-1"></a>        )</span>
 <span id="cb33-36"><a href="#cb33-36" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
 <span id="cb33-37"><a href="#cb33-37" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"No best model path available."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Model_name: mlp_3x512-256-128 depth: 3 hidden_units: [512, 256, 128] batch: 32 optimizer: adam lr: 0.001
 Training process plot saved to plots/mlp/best_model_mlp_3x512-256-128_32_0.001_adam.png</code></pre>
@@ -3239,8 +3179,6 @@ Training process plot saved to plots/mlp/best_model_mlp_3x512-256-128_32_0.001_a
 </ul>
 <p><strong>Reproducibility Notes</strong> - Because selection uses <code>random.choice</code>, results vary run to run unless a random seed is fixed beforehand. - If the best model path is missing (e.g., you skipped the training/testing cells), inference is skipped gracefully.</p>
 <div id="9ce79be8e56179e4" class="cell" data-execution_count="20">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Collect one random image per class folder in data/test</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>TEST_ROOT <span class="op">=</span> <span class="st">"data/test"</span></span>
@@ -3274,7 +3212,6 @@ Training process plot saved to plots/mlp/best_model_mlp_3x512-256-128_32_0.001_a
 <span id="cb35-31"><a href="#cb35-31" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"-"</span> <span class="op">*</span> <span class="dv">40</span>)</span>
 <span id="cb35-32"><a href="#cb35-32" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
 <span id="cb35-33"><a href="#cb35-33" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"No best model available; skipping inference."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Selected image for prediction: data/test\0\input_75_8_1.jpg</code></pre>
 </div>
