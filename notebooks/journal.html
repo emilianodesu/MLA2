@@ -304,7 +304,11 @@ window.Quarto = {
 <p>All models employ dropout (0.5) and weight decay (5 × 10⁻⁴) for regularization. Batch normalization and ReLU activations stabilize training and enable effective optimization across learning rates.</p>
 <p><strong>3. Training Loop</strong></p>
 <p>(<em><code>models_utils.py</code></em>, implementation Sec. 7) The training pipeline supports both SGD with momentum (0.9) and Adam optimizers, with learning rates in {0.01, 0.001, 0.0005}. Models are trained for up to 50 epochs for MLPs and 30 for Logistic Regression, with early stopping based on validation accuracy (patience = 5). Each epoch performs forward propagation, computes cross-entropy loss, runs backpropagation, updates parameters, and evaluates on the validation set. Checkpoints are saved whenever validation accuracy improves, and training metrics are logged to JSON and CSV for reproducibility.</p>
-<p>We adopt mini‑batch gradient descent. Contrast of optimizers: - <strong>SGD+Momentum</strong> approximates a first-order low-pass filter over gradients; momentum term reduces variance &amp; accelerates along shallow curvature. - <strong>Adam</strong> adapts per-parameter step size using first &amp; second moment estimates (bias-corrected). Faster initial descent but may converge to sharper minima; weight decay mitigates overfitting.</p>
+<p>We adopt mini‑batch gradient descent. Contrast of optimizers:</p>
+<ul>
+<li><strong>SGD+Momentum</strong> approximates a first-order low-pass filter over gradients; momentum term reduces variance &amp; accelerates along shallow curvature.</li>
+<li><strong>Adam</strong> adapts per-parameter step size using first &amp; second moment estimates (bias-corrected). Faster initial descent but may converge to sharper minima; weight decay mitigates overfitting.</li>
+</ul>
 <p><strong>4. Model Selection and Testing</strong></p>
 <p>(<em>Evaluation &amp; Selection site, implementation Sec. 9–10</em>) All checkpoints within <code>/checkpoints/log_reg/</code> and related directories are automatically enumerated. Filenames encode hyperparameter settings (architecture, batch size, optimizer, learning rate), which are parsed via regular expressions to reconstruct model configurations. Each model is reloaded and evaluated on the test set using the original batch size. The best model is selected by test accuracy. Additional analyses include confusion matrix visualization and qualitative inspection on selected test samples.</p>
 </section>
