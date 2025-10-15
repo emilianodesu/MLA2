@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Carlos Emiliano Mendoza Hernandez">
-<meta name="dcterms.date" content="2025-10-07">
+<meta name="dcterms.date" content="2025-10-16">
 
 <title>Machine Learning A2</title>
 <style>
@@ -227,7 +227,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 7, 2025</p>
+      <p class="date">October 16, 2025</p>
     </div>
   </div>
   
@@ -388,7 +388,7 @@ checkpoints/mlp/mlp_3x512-256-128_{batch}_{optimizer}_{lr}.pth</code></pre>
 </section>
 <section id="run-mlp-experiments" class="level2">
 <h2 class="anchored" data-anchor-id="run-mlp-experiments">3. Run MLP Experiments</h2>
-<p>Open <code>presentation.ipynb</code> (or future <code>mlp_*.py</code> script) and execute sequentially, or adapt the training loops for CLI execution.</p>
+<p>Open <code>presentation.ipynb</code> and execute sequentially, or adapt the training loops for CLI execution.</p>
 </section>
 <section id="inspect-outputs" class="level2">
 <h2 class="anchored" data-anchor-id="inspect-outputs">4. Inspect Outputs</h2>
@@ -409,14 +409,17 @@ checkpoints/mlp/mlp_3x512-256-128_{batch}_{optimizer}_{lr}.pth</code></pre>
 <section id="repository-layout" class="level1">
 <h1>Repository Layout</h1>
 <pre><code>├── log_reg.py                # Logistic regression experiment script
+├── mlp_basic.py              # Preliminar version of MLP (non configurable)
 ├── mlp.py                    # Configurable MLP model definition
 ├── models_utils.py           # Training / evaluation / plotting utilities
 ├── preprocessing_utils.py    # Dataset prep, transforms, loaders, visualization
-├── presentation.ipynb        # Exploratory + training notebook (MLP focus)
+├── implementation.ipynb      # Exploratory + training notebook (MLP focus)
+├── presentation.ipynb        # Presentation used for A3
 ├── checkpoints/              # Saved model weights (per config)
 ├── metrics/                  # JSON + CSV run metrics
 ├── plots/                    # Loss/accuracy curves &amp; confusion matrices
 ├── data/                     # Prepared splits + raw CSV
+├── notebooks/                # Jupyter notebooks rendered in the web deployment (including journal)
 └── LICENSE                   # GPLv3 license</code></pre>
 <hr>
 </section>
@@ -424,10 +427,7 @@ checkpoints/mlp/mlp_3x512-256-128_{batch}_{optimizer}_{lr}.pth</code></pre>
 <h1>Possible Extensions</h1>
 <ul>
 <li>Convolutional baselines (CNN) with non‑flattened transforms.</li>
-<li>Calibration analysis (reliability diagrams, ECE).</li>
 <li>Automated hyperparameter search (Optuna / Ray Tune).</li>
-<li>Model ensembling across top runs.</li>
-<li>Export for mobile / ONNX runtime inference.</li>
 </ul>
 <hr>
 </section>

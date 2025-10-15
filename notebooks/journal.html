@@ -269,7 +269,7 @@ window.Quarto = {
 <li><strong>Data augmentation</strong> <em>(train only)</em>: Random rotations (±10°) and affine translations (≤5%) simulate handwriting variations.</li>
 <li><strong>Flattening</strong>: The final image tensor is reshaped in row-major order into a fixed-length <strong>4096-dimensional vector</strong>, ensuring compatibility with linear and MLP models.</li>
 </ol>
-<p>Batches are loaded via <code>get_dataloaders(...)</code>, which returns PyTorch DataLoaders for train, validation, and test splits. The <strong>input tensor</strong> to the models has shape <code>(batch_size, 4096)</code> and contains real values in [0, 1] (normalized if enabled), with no NaNs. <strong>Target labels</strong> are integer-encoded in ({0, , 14}), corresponding to the 15 character classes:</p>
+<p>Batches are loaded via <code>get_dataloaders(...)</code>, which returns PyTorch DataLoaders for train, validation, and test splits. The <strong>input tensor</strong> to the models has shape <code>(batch_size, 4096)</code> and contains real values in [0, 1] (normalized if enabled), with no NaNs. <strong>Target labels</strong> are integer-encoded in ({0, , 1000000000}), corresponding to the 15 character classes:</p>
 <pre><code>['0', '1', '10', '100', '1000', '10000', '100000000',
  '2', '3', '4', '5', '6', '7', '8', '9']</code></pre>
 <p><strong>Outputs</strong></p>
@@ -278,7 +278,7 @@ window.Quarto = {
 <li><code>predict</code>: <span class="math inline">\(\arg\max_i Z_i\)</span> returns the most likely class index.</li>
 <li><code>predict_proba</code>: returns the full probability vector for downstream analysis or thresholding.</li>
 </ul>
-<p>All <strong>training and evaluation metrics</strong> (e.g., loss, accuracy) are logged per epoch to structured JSON and CSV files under <code>metrics/</code>, while <strong>model checkpoints</strong> are stored under <code>checkpoints/</code> using standardized filenames encoding architecture, optimizer, batch size, and learning rate. Final test metrics and confusion matrices are saved in <code>plots/</code> for inspection (see <a href="https://emilianodesu.github.io/MLA2/presentation.html">presentation Sections 7–10</a>).</p>
+<p>All <strong>training and evaluation metrics</strong> (e.g., loss, accuracy) are logged per epoch to structured JSON and CSV files under <code>metrics/</code>, while <strong>model checkpoints</strong> are stored under <code>checkpoints/</code> using standardized filenames encoding architecture, optimizer, batch size, and learning rate. Final test metrics and confusion matrices are saved in <code>plots/</code> for inspection (see <a href="https://emilianodesu.github.io/MLA2/implementation.html">implementation Sections 7–10</a>).</p>
 <p><strong>Rationale Linking Inputs, Outputs, and Task</strong></p>
 <p>The <strong>flattened 4096-dimensional vector</strong> serves as a stable, fixed-length numerical representation of each image, enabling both linear and MLP models to operate without convolutional layers. Light <strong>data augmentation</strong> introduces invariance to the types of perturbations expected in real handwriting, improving generalization. The <strong>cross-entropy loss</strong> on the softmax logits directly optimizes the negative log-likelihood of the correct class, aligning exactly with the task objective of assigning each image to one of 15 categories. The logits also provide a probabilistic interpretation useful for confidence estimation, misclassification analysis, and visualization. This tight alignment between <strong>input representation</strong>, <strong>model output</strong>, and <strong>loss function</strong> ensures that the computational pipeline reflects the structure and demands of the classification task rather than relying on ad hoc heuristics.</p>
 </section>
@@ -289,9 +289,9 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="system-overview"><strong>System Overview</strong></h3>
 <p>The project follows a structured end-to-end pipeline that mirrors standard machine learning workflows, from data acquisition to final model evaluation. Each component was designed to be modular, reproducible, and analytically transparent.</p>
 <p><strong>1. Data Preparation</strong></p>
-<p>(<em><code>preprocessing_utils.py</code></em>, presentation Sec. 2–3) The raw dataset is first downloaded and extracted if necessary, after which it is partitioned into stratified training, validation, and test splits with an 80 / 10 / 10 ratio. This stratification ensures that class proportions are preserved across splits, maintaining balanced evaluation. ImageFolder datasets are then constructed, and corresponding DataLoaders are instantiated with configured transforms and batch sizes. These transforms handle basic preprocessing (e.g., tensor conversion and normalization) and light augmentations to improve generalization without distorting the underlying character structures.</p>
+<p>(<em><code>preprocessing_utils.py</code></em>, implementation Sec. 2–3) The raw dataset is first downloaded and extracted if necessary, after which it is partitioned into stratified training, validation, and test splits with an 80 / 10 / 10 ratio. This stratification ensures that class proportions are preserved across splits, maintaining balanced evaluation. ImageFolder datasets are then constructed, and corresponding DataLoaders are instantiated with configured transforms and batch sizes. These transforms handle basic preprocessing (e.g., tensor conversion and normalization) and light augmentations to improve generalization without distorting the underlying character structures.</p>
 <p><strong>2. Model Definition</strong></p>
-<p>(<em><code>mlp.py</code>, <code>log_reg.py</code></em>, presentation Sec. 4–6) Two primary model families were explored:</p>
+<p>(<em><code>mlp.py</code>, <code>log_reg.py</code></em>, implementation Sec. 4–6) Two primary model families were explored:</p>
 <ul>
 <li><p><strong>Logistic Regression</strong>: A single linear layer mapping the 4096-dimensional flattened input to 15 logits. This provides a simple baseline to assess the linear separability of the data.</p></li>
 <li><p><strong>MLP Baselines</strong>: Deeper fully connected architectures built from repeating blocks of <code>Linear → BatchNorm1d → ReLU → Dropout</code>, followed by a final linear layer to 15 logits. Three key architectures were examined:</p>
@@ -303,10 +303,10 @@ window.Quarto = {
 </ul>
 <p>All models employ dropout (0.5) and weight decay (5 × 10⁻⁴) for regularization. Batch normalization and ReLU activations stabilize training and enable effective optimization across learning rates.</p>
 <p><strong>3. Training Loop</strong></p>
-<p>(<em><code>models_utils.py</code></em>, presentation Sec. 7) The training pipeline supports both SGD with momentum (0.9) and Adam optimizers, with learning rates in {0.01, 0.001, 0.0005}. Models are trained for up to 50 epochs for MLPs and 30 for Logistic Regression, with early stopping based on validation accuracy (patience = 5). Each epoch performs forward propagation, computes cross-entropy loss, runs backpropagation, updates parameters, and evaluates on the validation set. Checkpoints are saved whenever validation accuracy improves, and training metrics are logged to JSON and CSV for reproducibility.</p>
+<p>(<em><code>models_utils.py</code></em>, implementation Sec. 7) The training pipeline supports both SGD with momentum (0.9) and Adam optimizers, with learning rates in {0.01, 0.001, 0.0005}. Models are trained for up to 50 epochs for MLPs and 30 for Logistic Regression, with early stopping based on validation accuracy (patience = 5). Each epoch performs forward propagation, computes cross-entropy loss, runs backpropagation, updates parameters, and evaluates on the validation set. Checkpoints are saved whenever validation accuracy improves, and training metrics are logged to JSON and CSV for reproducibility.</p>
 <p>We adopt mini‑batch gradient descent. Contrast of optimizers: - <strong>SGD+Momentum</strong> approximates a first-order low-pass filter over gradients; momentum term reduces variance &amp; accelerates along shallow curvature. - <strong>Adam</strong> adapts per-parameter step size using first &amp; second moment estimates (bias-corrected). Faster initial descent but may converge to sharper minima; weight decay mitigates overfitting.</p>
 <p><strong>4. Model Selection and Testing</strong></p>
-<p>(<em>Evaluation &amp; Selection site, presentation Sec. 9–10</em>) All checkpoints within <code>/checkpoints/log_reg/</code> and related directories are automatically enumerated. Filenames encode hyperparameter settings (architecture, batch size, optimizer, learning rate), which are parsed via regular expressions to reconstruct model configurations. Each model is reloaded and evaluated on the test set using the original batch size. The best model is selected by test accuracy. Additional analyses include confusion matrix visualization and qualitative inspection on selected test samples.</p>
+<p>(<em>Evaluation &amp; Selection site, implementation Sec. 9–10</em>) All checkpoints within <code>/checkpoints/log_reg/</code> and related directories are automatically enumerated. Filenames encode hyperparameter settings (architecture, batch size, optimizer, learning rate), which are parsed via regular expressions to reconstruct model configurations. Each model is reloaded and evaluated on the test set using the original batch size. The best model is selected by test accuracy. Additional analyses include confusion matrix visualization and qualitative inspection on selected test samples.</p>
 </section>
 <section id="key-components" class="level3">
 <h3 class="anchored" data-anchor-id="key-components"><strong>Key components</strong></h3>
@@ -385,7 +385,7 @@ p_i = \frac{\exp(z_i)}{\sum_j \exp(z_j)}.
 <ul>
 <li>Early stopping + BatchNorm + Dropout significantly improved MLP training stability and generalization vs.&nbsp;the V0 approach.</li>
 <li>Systematic logging (JSON/CSV) and strict checkpoint naming made it easy to compare runs and prevented “lost best model” issues.</li>
-<li>Adam at 0.001 provided strong, steady results.</li>
+<li>Best model, using Adam at 0.001 provided strong, steady results.</li>
 </ul>
 <p><strong>What could be improved</strong>:</p>
 <ul>
@@ -420,7 +420,7 @@ p_i = \frac{\exp(z_i)}{\sum_j \exp(z_j)}.
 </ul></li>
 <li><p>V0 lineage:</p>
 <ul>
-<li>Early versions (V0/*.py) established a working baseline but lacked BatchNorm, robust persistence, and standardized naming. The current code incorporates these improvements, enabling more reliable experimentation and clearer reporting.</li>
+<li>Early versions (V0/*.py) established a working baseline but lacked modularization, robust persistence, and standardized naming. The current code incorporates these improvements, enabling more reliable experimentation and clearer reporting.</li>
 </ul></li>
 </ul>
 </section>
