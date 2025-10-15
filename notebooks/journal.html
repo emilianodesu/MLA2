@@ -195,6 +195,8 @@ window.Quarto = {
   <li><a href="#reflections-and-future-work" id="toc-reflections-and-future-work" class="nav-link" data-scroll-target="#reflections-and-future-work"><strong>Reflections and Future Work</strong></a></li>
   </ul></li>
   <li><a href="#appendix-reproducibility-and-artifacts" id="toc-appendix-reproducibility-and-artifacts" class="nav-link" data-scroll-target="#appendix-reproducibility-and-artifacts">Appendix: Reproducibility and Artifacts</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  <li><a href="#use-of-ai" id="toc-use-of-ai" class="nav-link" data-scroll-target="#use-of-ai">Use of AI</a></li>
   </ul>
 </nav>
     </div>
@@ -375,7 +377,6 @@ p_i = \frac{\exp(z_i)}{\sum_j \exp(z_j)}.
 </section>
 <section id="reflections-and-future-work" class="level3">
 <h3 class="anchored" data-anchor-id="reflections-and-future-work"><strong>Reflections and Future Work</strong></h3>
-<hr>
 </section>
 </section>
 <section id="appendix-reproducibility-and-artifacts" class="level2">
@@ -389,7 +390,6 @@ p_i = \frac{\exp(z_i)}{\sum_j \exp(z_j)}.
 <p><strong>What could be improved</strong>:</p>
 <ul>
 <li>Convolutional inductive bias: Dense MLPs over flattened pixels ignore locality; CNN baselines should improve both sample efficiency and final accuracy.</li>
-<li>Calibration analysis: Add reliability diagrams/ECE to assess confidence; helpful if deploying probabilistic outputs.</li>
 <li>Hyperparameter search: Move from manual grids to Optuna/Ray Tune for depth/width/LR/momentum/weight decay.</li>
 <li>Data normalization: Compute dataset mean/std to enable consistent Normalize(mean,std) and potentially improve optimization smoothness.</li>
 <li>Regularization sweeps: Dropout rates and weight decay could be tuned per depth.</li>
@@ -423,6 +423,20 @@ p_i = \frac{\exp(z_i)}{\sum_j \exp(z_j)}.
 <li>Early versions (V0/*.py) established a working baseline but lacked BatchNorm, robust persistence, and standardized naming. The current code incorporates these improvements, enabling more reliable experimentation and clearer reporting.</li>
 </ul></li>
 </ul>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<ul>
+<li><p>Newcastle University. (2019). Handwritten Chinese Numbers. Newcastle University. <a href="https://data.ncl.ac.uk/articles/dataset/Handwritten_Chinese_Numbers/10280831/1?file=18617381">https://data.ncl.ac.uk/articles/dataset/Handwritten_Chinese_Numbers/10280831/1?file=18617381</a></p></li>
+<li><p>Preda, G. (2019). Chinese MNIST in CSV. Kaggle. <a href="https://www.kaggle.com/datasets/gpreda/chinese-mnist">https://www.kaggle.com/datasets/gpreda/chinese-mnist</a></p></li>
+<li><p>Atef, O. (2021). pytorch_tutorials/Ex_2_Image_Classification.ipynb. GitHub. <a href="https://github.com/omaratef3221/pytorch_tutorials/blob/main/Ex_2_Image_Classification.ipynb">https://github.com/omaratef3221/pytorch_tutorials/blob/main/Ex_2_Image_Classification.ipynb</a></p></li>
+<li><p>Bourke, D. (n.d.). 04. PyTorch Custom Datasets. Learn PyTorch. <a href="https://www.learnpytorch.io/04_pytorch_custom_datasets/">https://www.learnpytorch.io/04_pytorch_custom_datasets/</a></p></li>
+</ul>
+</section>
+<section id="use-of-ai" class="level2">
+<h2 class="anchored" data-anchor-id="use-of-ai">Use of AI</h2>
+<p>The main ideas for this report were extracted from the tutorials listed above. The code was adapted to the specific problem of Chinese character classification with the assistance of ChatGPT-5, which helped in modifying and tailoring the concepts and scripts to the unique requirements of the dataset and the classification task. The consequent final versions were a result of iterative refinement and using AI for validation to ensure correctness and alignment with project goals.</p>
+<p>Further details on AI usage: - <strong>Code Adaptation</strong>: ChatGPT-5 assisted in adapting code snippets from the tutorials to fit the Chinese MNIST dataset, including modifying data loading, preprocessing, and model architectures. - <strong>Debugging and Validation</strong>: ChatGPT-5 was used to review code segments for potential errors, suggest improvements, and validate the logic of training loops and evaluation metrics. - <strong>Report Writing</strong>: ChatGPT-5 helped in structuring the report, ensuring clarity, coherence, and adherence to academic standards.</p>
 
 
 </section>
