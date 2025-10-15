@@ -157,10 +157,7 @@ Run the later notebook cells (section “Inference”) or re‑load a checkpoint
 # Possible Extensions
 
 -   Convolutional baselines (CNN) with non‑flattened transforms.
--   Calibration analysis (reliability diagrams, ECE).
 -   Automated hyperparameter search (Optuna / Ray Tune).
--   Model ensembling across top runs.
--   Export for mobile / ONNX runtime inference.
 
 ------------------------------------------------------------------------
 
