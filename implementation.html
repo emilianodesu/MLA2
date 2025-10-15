@@ -305,7 +305,11 @@ test: 1500 images, 15 classes
 <li>Create ImageFolder datasets from data/train, data/val, and data/test; class labels come from the subfolder names created in the previous step.</li>
 <li>Wrap datasets with PyTorch DataLoaders using the chosen batch_size. The training loader is shuffled; val/test are not.</li>
 </ul>
-<p>Inputs / outputs: - Inputs: images on disk under <code>data/{train,val,test}</code>. - Outputs: <code>dataloaders</code> and <code>datasets</code> dicts where <code>dataloaders['train']</code> yields (X, y) batches ready for training.</p>
+<p>Inputs / outputs:</p>
+<ul>
+<li>Inputs: images on disk under <code>data/{train,val,test}</code>.</li>
+<li>Outputs: <code>dataloaders</code> and <code>datasets</code> dicts where <code>dataloaders['train']</code> yields (X, y) batches ready for training.</li>
+</ul>
 <p>Notes:</p>
 <ul>
 <li>Normalization is off by default. Enable normalize=True to get zero-mean/unit-variance inputs based on the provided mean/std (single-channel).</li>
